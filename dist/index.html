@@ -8,12 +8,13 @@
   <title>Francisco & Katherine · Eine Einladung für dich</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23712232'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Georgia,serif' font-size='24' fill='%23fff4de'%3EFK%3C/text%3E%3C/svg%3E">
   <link rel="preload" href="assets/fk-siegel-bordeaux-v1.png" as="image">
-  <link rel="stylesheet" href="styles.css">
-  <script src="invitation.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=2">
+  <script src="invitation.js?v=2" defer></script>
 </head>
 <body>
   <header class="masthead" aria-label="Francisco und Katherine, 9. Januar 2027">
     <span class="wordmark" aria-hidden="true">F<span class="amp">&</span>K</span>
+    <button class="header-replay" type="button" hidden><span aria-hidden="true">↺</span> Briefanimation ansehen</button>
     <span class="masthead-date" aria-hidden="true">09 <span>·</span> 01 <span>·</span> 2027</span>
   </header>
 
@@ -26,7 +27,7 @@
     <div class="scene">
       <div class="envelope-wrap">
         <div class="envelope-shadow" aria-hidden="true"></div>
-        <button class="envelope" type="button" aria-label="Brief öffnen und Hochzeitseinladung entdecken" aria-expanded="false" aria-controls="invitation">
+        <button class="envelope" type="button" aria-label="Brief mit Animation öffnen und Hochzeitseinladung entdecken" aria-expanded="false" aria-controls="invitation">
           <span class="envelope-back" aria-hidden="true"></span>
           <span class="lining" aria-hidden="true"></span>
           <span class="tucked-paper" aria-hidden="true"></span>
@@ -68,8 +69,66 @@
       <span class="caption-line"></span>
       <p>Zum Öffnen das Siegel berühren</p>
     </div>
-    <button class="motion-preview" type="button" hidden>Mit Animation öffnen</button>
-    <button class="replay" type="button" hidden><span aria-hidden="true">↺</span> Noch einmal öffnen</button>
+    <div class="entry-actions">
+      <button class="motion-preview" type="button">Mit Animation öffnen</button>
+      <button class="skip-animation" type="button">Ohne Animation öffnen</button>
+    </div>
+    <button class="replay" type="button" hidden><span aria-hidden="true">↺</span> Briefanimation noch einmal ansehen</button>
+    <a class="details-link" href="#ort" hidden>Entdecke unseren Hochzeitsort <span aria-hidden="true">↓</span></a>
+
+    <div class="wedding-details" hidden>
+      <section class="venue-section" id="ort" aria-labelledby="venue-heading">
+        <div class="section-heading">
+          <p class="eyebrow">HIER FEIERN WIR</p>
+          <h2 id="venue-heading">Casa Antares</h2>
+          <p class="section-subtitle">Ein besonderer Ort für unseren besonderen Tag.</p>
+        </div>
+        <div class="venue-gallery">
+          <figure class="venue-main-photo">
+            <img src="assets/casa-antares-garten.webp" alt="Das weiße koloniale Landhaus Casa Antares mit Ziegeldach, blühendem Garten und einem Steinweg" width="1280" height="853" loading="lazy">
+            <figcaption>Ein Ort zum Ankommen und Feiern</figcaption>
+          </figure>
+          <figure class="venue-small-photo">
+            <img src="assets/casa-eingang.avif" alt="Das Eingangstor der Casa Antares, eingerahmt von Palmen und blühendem Grün" width="720" height="480" loading="lazy">
+            <figcaption>Willkommen in Casa Antares</figcaption>
+          </figure>
+          <figure class="venue-small-photo">
+            <img src="assets/casa-antares-pergola.jpg" alt="Die Pergola der Casa Antares mit gedeckten Holztischen, Bambusdach und Blumenschmuck" width="1000" height="667" loading="lazy">
+            <figcaption>Die Pergola · Impression einer Feier</figcaption>
+          </figure>
+        </div>
+        <p class="photo-credits">Fotos: <a href="https://fincasdelavilla.com/casa-alquiler-villa-de-leyva/casa-antares/" target="_blank" rel="noopener noreferrer">Fincas de la Villa</a> · <a href="https://www.bodasenvilladeleyva.com/portfolio/casa-antares/" target="_blank" rel="noopener noreferrer">Bodas en Villa de Leyva / Laura Rincón</a></p>
+        <div class="venue-story">
+          <p>Unsere Hochzeit findet in <strong>Casa Antares</strong> statt – ganz in der Nähe von Villa de Leyva. Ein koloniales Landhaus, umgeben von Gärten und viel Grün. Hier möchten wir mit euch ankommen, feiern und einen unvergesslichen Tag verbringen.</p>
+          <p><strong>Villa de Leyva</strong> ist einer der schönsten Orte Kolumbiens. Auch in der Umgebung gibt es viel zu entdecken. Vielleicht verbindet ihr unsere Hochzeit mit ein paar Tagen zum Erkunden und Genießen.</p>
+        </div>
+        <div class="map-card">
+          <div class="map-copy">
+            <p class="eyebrow">SO FINDET IHR UNS</p>
+            <h3>Ein kleines Stück<br>Vorfreude auf der Karte.</h3>
+            <address><strong>Casa Antares</strong><br>Km 3 vía el Infiernito<br>Villa de Leyva, Boyacá, Kolumbien</address>
+            <a class="map-link" href="https://www.google.com/maps/place/Casa+Antares/@5.6456278,-73.5542638,17z/data=!3m1!4b1!4m6!3m5!1s0x8e41d78615244e73:0x46114815d279d0bd!8m2!3d5.6456278!4d-73.5542638!16s%2Fg%2F11gy4_qcg9" target="_blank" rel="noopener noreferrer">In Google Maps öffnen <span aria-hidden="true">↗</span></a>
+          </div>
+          <iframe title="Google Maps: Casa Antares bei Villa de Leyva" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.4652028623173!2d-73.5542638!3d5.6456278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e41d78615244e73%3A0x46114815d279d0bd!2sCasa%20Antares!5e0!3m2!1sde!2sde!4v1789289228731!5m2!1sde!2sde" width="600" height="350" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </section>
+
+      <section class="weather-section" id="wetter" aria-labelledby="weather-heading">
+        <div class="weather-intro">
+          <p class="eyebrow">GUT ZU WISSEN</p>
+          <h2 id="weather-heading">Frühlingshafte Tage.<br>Frische Nächte.</h2>
+          <p>In Villa de Leyva ist das Klima gemäßigt und angenehm mild. Tagsüber könnt ihr mit etwa 22 °C rechnen, nachts wird es mit etwa 12 °C deutlich kühler.</p>
+        </div>
+        <div class="weather-facts">
+          <dl class="temperatures">
+            <div><dt>Tagsüber</dt><dd>22<span>°C</span><small>angenehm mild</small></dd></div>
+            <div><dt>Nachts</dt><dd>12<span>°C</span><small>frisch und kühl</small></dd></div>
+          </dl>
+          <p class="weather-note">Ungefähre Temperaturen zur Orientierung.</p>
+          <div class="warmth-note"><h3>Für einen gemütlichen Abend</h3><p>Bringt euch etwas Warmes zum Überziehen mit. Für die Nacht haben wir auch Heizpilze.</p></div>
+        </div>
+      </section>
+    </div>
     <p class="status sr-only" role="status" aria-live="polite"></p>
     <noscript><p class="no-script">Francisco & Katherine · Wir heiraten am 9. Januar 2027 in Villa de Leyva, Kolumbien. Wir freuen uns auf dich!</p></noscript>
   </main>

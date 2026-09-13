@@ -2,25 +2,29 @@ const envelope = document.querySelector('.envelope');
 const invitation = document.querySelector('.invitation');
 const replay = document.querySelector('.replay');
 const status = document.querySelector('.status');
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const motionPreview = document.querySelector('.motion-preview');
 const intro = document.querySelector('.intro');
-motionPreview.hidden = !reduceMotion.matches;
+const entryActions = document.querySelector('.entry-actions');
+const headerReplay = document.querySelector('.header-replay');
+const details = document.querySelector('.wedding-details');
+const detailsLink = document.querySelector('.details-link');
+const skipAnimation = document.querySelector('.skip-animation');
 const stages = ['is-opening', 'is-flap-open', 'is-extracted', 'is-unfolded', 'is-settled'];
 let opening = false;
 const pause = (ms) => new Promise(resolve => window.setTimeout(resolve, ms));
 
-async function openInvitation(forceMotion = false) {
+async function openInvitation(forceMotion = true) {
   if (opening) return;
   opening = true;
   envelope.disabled = true;
   envelope.setAttribute('aria-expanded', 'true');
-  motionPreview.hidden = true;
+  entryActions.hidden = true;
+  headerReplay.hidden = true;
   document.body.classList.toggle('motion-requested', forceMotion);
   invitation.hidden = false;
   status.textContent = 'Deine Einladung wird geöffnet.';
 
-  if (reduceMotion.matches && !forceMotion) {
+  if (!forceMotion) {
     document.body.classList.add(...stages);
   } else {
     document.body.classList.add('is-opening');
@@ -37,6 +41,9 @@ async function openInvitation(forceMotion = false) {
   invitation.inert = false;
   intro.setAttribute('aria-hidden', 'true');
   replay.hidden = false;
+  headerReplay.hidden = false;
+  details.hidden = false;
+  detailsLink.hidden = false;
   status.textContent = 'Francisco und Katherine heiraten am 9. Januar 2027 in Villa de Leyva, Kolumbien.';
   invitation.querySelector('h2').focus({ preventScroll: true });
 }
@@ -47,12 +54,15 @@ function resetInvitation() {
   invitation.hidden = true;
   invitation.inert = true;
   replay.hidden = true;
+  headerReplay.hidden = true;
+  details.hidden = true;
+  detailsLink.hidden = true;
+  entryActions.hidden = false;
   envelope.disabled = false;
   envelope.setAttribute('aria-expanded', 'false');
   status.textContent = '';
   opening = false;
   intro.removeAttribute('aria-hidden');
-  motionPreview.hidden = !reduceMotion.matches;
   window.scrollTo({top: 0, behavior: 'instant'});
   // Flush the reset before restoring transitions so replay begins with a closed letter.
   void document.body.offsetHeight;
@@ -60,6 +70,16 @@ function resetInvitation() {
   envelope.focus({ preventScroll: true });
 }
 
-envelope.addEventListener('click', () => openInvitation());
+async function replayAnimation() {
+  if (!document.body.classList.contains('is-settled')) return;
+  resetInvitation();
+  // Give the closed envelope a painted frame before playing the full sequence again.
+  await pause(120);
+  openInvitation(true);
+}
+
+envelope.addEventListener('click', () => openInvitation(true));
 motionPreview.addEventListener('click', () => openInvitation(true));
-replay.addEventListener('click', resetInvitation);
+skipAnimation.addEventListener('click', () => openInvitation(false));
+replay.addEventListener('click', replayAnimation);
+headerReplay.addEventListener('click', replayAnimation);
