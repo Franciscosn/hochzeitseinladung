@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3eee5">
+  <meta name="description" content="Francisco und Katherine heiraten. Eine Einladung von Herzen. 9. Januar 2027, Villa de Leyva, Kolumbien.">
+  <title>Francisco & Katherine · Eine Einladung für dich</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23712232'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Georgia,serif' font-size='24' fill='%23fff4de'%3EFK%3C/text%3E%3C/svg%3E">
+  <link rel="preload" href="assets/fk-siegel-bordeaux-v1.png" as="image">
+  <link rel="stylesheet" href="styles.css">
+  <script src="invitation.js" defer></script>
+</head>
+<body>
+  <header class="masthead" aria-label="Francisco und Katherine, 9. Januar 2027">
+    <span class="wordmark" aria-hidden="true">F<span class="amp">&</span>K</span>
+    <span class="masthead-date" aria-hidden="true">09 <span>·</span> 01 <span>·</span> 2027</span>
+  </header>
+
+  <main class="experience">
+    <div class="intro">
+      <p class="eyebrow">FÜR DICH. VON HERZEN.</p>
+      <h1>Du bist eingeladen.</h1>
+    </div>
+
+    <div class="scene">
+      <div class="envelope-wrap">
+        <div class="envelope-shadow" aria-hidden="true"></div>
+        <button class="envelope" type="button" aria-label="Brief öffnen und Hochzeitseinladung entdecken" aria-expanded="false" aria-controls="invitation">
+          <span class="envelope-back" aria-hidden="true"></span>
+          <span class="lining" aria-hidden="true"></span>
+          <span class="tucked-paper" aria-hidden="true"></span>
+          <span class="pocket-left" aria-hidden="true"></span>
+          <span class="pocket-right" aria-hidden="true"></span>
+          <span class="pocket-bottom" aria-hidden="true"></span>
+          <span class="flap" aria-hidden="true"><span class="flap-front"></span><span class="flap-back"></span></span>
+          <span class="seal" aria-hidden="true"><img src="assets/fk-siegel-bordeaux-v1.png" alt="" width="1254" height="1254" draggable="false"></span>
+        </button>
+      </div>
+
+      <article class="invitation" id="invitation" aria-label="Eure Hochzeitseinladung" hidden inert>
+        <div class="paper-panel panel-top">
+          <div class="paper-border" aria-hidden="true"></div>
+          <p class="eyebrow">WIR HEIRATEN</p>
+          <h2 tabindex="-1">Francisco<span class="names-amp">&</span>Katherine</h2>
+        </div>
+        <div class="fold-one">
+          <div class="paper-panel panel-middle">
+            <div class="paper-border" aria-hidden="true"></div>
+            <p class="invitation-message">Manche Momente werden erst vollkommen,<br class="desktop-break"> wenn wir sie mit unseren Lieblingsmenschen teilen.</p>
+            <p class="date"><span>JANUAR</span><strong>09</strong><span>2027</span></p>
+            <p class="location">Villa de Leyva</p>
+            <p class="country">KOLUMBIEN</p>
+          </div>
+          <div class="fold-two">
+            <div class="paper-panel panel-bottom">
+              <div class="paper-border" aria-hidden="true"></div>
+              <p>Wir möchten diesen besonderen Tag<br>mit dir feiern.</p>
+              <p class="signature">Wir freuen uns auf dich!</p>
+              <span class="little-monogram" aria-hidden="true">F <i>&</i> K</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="opening-caption" aria-hidden="true">
+      <span class="caption-line"></span>
+      <p>Zum Öffnen das Siegel berühren</p>
+    </div>
+    <button class="motion-preview" type="button" hidden>Mit Animation öffnen</button>
+    <button class="replay" type="button" hidden><span aria-hidden="true">↺</span> Noch einmal öffnen</button>
+    <p class="status sr-only" role="status" aria-live="polite"></p>
+    <noscript><p class="no-script">Francisco & Katherine · Wir heiraten am 9. Januar 2027 in Villa de Leyva, Kolumbien. Wir freuen uns auf dich!</p></noscript>
+  </main>
+  <footer class="footer"><span>FRANCISCO & KATHERINE</span><span>VILLA DE LEYVA · KOLUMBIEN</span></footer>
+</body>
+</html>
