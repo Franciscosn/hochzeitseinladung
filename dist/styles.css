@@ -7,6 +7,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;op
 button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
 button:focus-visible{outline:2px solid var(--wine);outline-offset:12px}
 [hidden]{display:none!important}
+.veil-gate-message{min-height:35svh;display:grid;place-items:center;text-align:center;margin:0;padding:24px 12px 60px;font-size:clamp(24px,5vw,34px);font-style:italic;color:var(--wine)}
 .experience{display:flex;flex-direction:column;align-items:center;min-height:calc(100svh - 76px);padding:40px 24px 38px;perspective:1800px}
 .intro{text-align:center;margin:5px 0 65px;max-height:130px;transition:opacity .55s,margin .9s var(--ease),max-height .9s var(--ease),transform .8s var(--ease)}
 .eyebrow{font:11px/1.6 Arial,sans-serif;letter-spacing:3px;color:var(--wine);margin:0 0 13px}

@@ -8,9 +8,9 @@
   <title>Francisco & Katherine · Eine Einladung für dich</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23712232'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Georgia,serif' font-size='24' fill='%23fff4de'%3EFK%3C/text%3E%3C/svg%3E">
   <link rel="preload" href="assets/kf-wachssiegel-schlicht.png" as="image">
-  <link rel="stylesheet" href="styles.css?v=14">
+  <link rel="stylesheet" href="styles.css?v=15">
   <script src="invitation.js?v=6" defer></script>
-  <script type="module" src="veil.js?v=6"></script>
+  <script type="module" src="veil.js?v=7"></script>
 </head>
 <body>
   <main class="experience">
@@ -98,6 +98,8 @@
         <p class="veil-status sr-only" role="status" aria-live="polite"></p>
       </section>
 
+      <p class="veil-gate-message">Bitte den Schleier hochziehen</p>
+      <div class="veil-gated-content" hidden inert>
       <section class="venue-section" id="ort" aria-labelledby="venue-heading">
         <div class="section-heading">
           <p class="eyebrow">HIER FEIERN WIR</p>
@@ -192,9 +194,10 @@
         </div>
       </section>
     </div>
+    </div>
     <p class="status sr-only" role="status" aria-live="polite"></p>
     <noscript><p class="no-script">Francisco & Katherine · Wir heiraten am 9. Januar 2027 in Villa de Leyva, Kolumbien. Wir freuen uns auf dich!</p></noscript>
   </main>
-  <footer class="footer"><span>FRANCISCO & KATHERINE</span><span>VILLA DE LEYVA · KOLUMBIEN</span></footer>
+  <footer class="footer" hidden><span>FRANCISCO & KATHERINE</span><span>VILLA DE LEYVA · KOLUMBIEN</span></footer>
 </body>
 </html>

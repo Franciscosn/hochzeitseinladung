@@ -6,6 +6,9 @@ const grip=stage.querySelector('.veil-grip');
 const toggle=document.querySelector('.veil-toggle');
 const hint=document.querySelector('.veil-hint');
 const announcement=document.querySelector('.veil-status');
+const gatedContent=document.querySelector('.veil-gated-content');
+const gateMessage=document.querySelector('.veil-gate-message');
+const footer=document.querySelector('.footer');
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 let cloth,gl,program,buffers,raf=0,last=0,accumulator=0,visible=false,settleFrames=0;
 let target=0,pointer=null,ignoreClick=false,width=0,height=0;
@@ -140,6 +143,10 @@ function frame(now){
 }
 function wake(){if(!raf&&visible&&!document.hidden){last=0;accumulator=0;raf=requestAnimationFrame(frame);}}
 function updateState(open){
+  gatedContent.hidden=!open;
+  gatedContent.inert=!open;
+  gateMessage.hidden=open;
+  footer.hidden=!open;
   stage.classList.toggle('is-revealed',open);
   grip.setAttribute('aria-expanded',String(open));
   grip.tabIndex=open?-1:0;
@@ -191,7 +198,7 @@ for(const surface of [grip]){
 grip.addEventListener('click',()=>{if(ignoreClick){ignoreClick=false;return;}reveal(true);});
 grip.addEventListener('keydown',event=>{
   if(event.key==='ArrowUp'||event.key==='ArrowDown'){
-    event.preventDefault();target=Math.max(0,Math.min(1,target+(event.key==='ArrowUp'?.2:-.2)));cloth?.setOpening(target);settleFrames=120;wake();if(target===1)updateState(true);
+    event.preventDefault();target=Math.max(0,Math.min(1,target+(event.key==='ArrowUp'?.2:-.2)));cloth?.setOpening(target);settleFrames=120;wake();updateState(target===1);
   }
 });
 toggle.addEventListener('click',()=>reveal(target<.5,true));
