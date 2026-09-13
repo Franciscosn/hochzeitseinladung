@@ -88,6 +88,28 @@ body.is-resetting *,body.is-resetting *::before,body.is-resetting *::after{trans
 @media(prefers-reduced-motion:reduce){body:not(.motion-requested) *,body:not(.motion-requested) *::before,body:not(.motion-requested) *::after{animation-duration:.01ms!important;transition-duration:.01ms!important;transition-delay:0ms!important}html{scroll-behavior:auto}}
 
 /* The invitation continues into a photo-led guide to the place and its climate. */
+.schedule-section{margin-bottom:100px;scroll-margin-top:125px}
+.veil-stage{position:relative;width:min(100%,850px);margin:auto;isolation:isolate}
+.schedule-paper{position:relative;min-height:620px;padding:38px 80px 30px;background:#fffaf0;box-shadow:0 15px 55px #60442f12;border:1px solid #b69a733f}
+.schedule-paper::before{content:'';position:absolute;inset:15px;border:1px solid #b69a7340;pointer-events:none}
+.schedule-date{font:12px/1.5 Arial,sans-serif;letter-spacing:2.2px;text-align:center;color:#947750;margin:4px 0 30px}
+.schedule-list{list-style:none;margin:0;padding:0}
+.schedule-list li{display:grid;grid-template-columns:110px 1fr;gap:36px;min-height:108px;position:relative;align-items:start}
+.schedule-list li:not(:last-child)::after{content:'';position:absolute;left:128px;top:23px;bottom:-13px;width:1px;background:#b69a7345}
+.schedule-list li::before{content:'';position:absolute;width:7px;height:7px;border-radius:50%;border:1px solid #b49468;background:#fffaf0;left:125px;top:14px}
+.schedule-list time{font-size:39px;font-variant-numeric:lining-nums tabular-nums;line-height:1.05;color:var(--wine)}
+.schedule-list h3{font-size:29px;font-weight:400;line-height:1.15;margin:0 0 7px;color:var(--wine);letter-spacing:-.3px}
+.schedule-list p{font-size:19px;line-height:1.35;margin:0;color:#7a6556}
+.schedule-timezone{font:12px/1.7 Arial,sans-serif;text-align:center;color:#8b7763;margin:3px 0 0}
+.veil-canvas,.veil-fallback{position:absolute;inset:0;width:100%;height:100%;z-index:2;touch-action:pan-y}
+.veil-canvas{cursor:grab;opacity:0;transition:opacity .3s}.veil-stage[data-renderer="webgl"] .veil-canvas{opacity:1}.veil-stage[data-renderer="webgl"] .veil-fallback{display:none}
+.veil-canvas:active{cursor:grabbing}.veil-stage.is-revealed .veil-canvas{pointer-events:none}
+.veil-fallback{background:#fffaf0d9;backdrop-filter:blur(4px);transform-origin:right;transition:transform .8s var(--ease)}.veil-stage.is-revealed .veil-fallback{transform:scaleX(.06)}
+.veil-grip{position:absolute;z-index:3;left:26px;top:45%;border:0;background:none;display:flex;align-items:center;gap:13px;color:#73503d;cursor:grab;touch-action:pan-y;padding:15px;transition:opacity .3s;filter:drop-shadow(0 2px 4px #fff8eb)}
+.veil-grip:active{cursor:grabbing}.grip-ring{display:grid;place-items:center;width:48px;height:48px;border:1px solid #ae8b53;border-radius:50%;font-size:23px;background:#fffaf0a6;box-shadow:inset 0 0 0 4px #fffaf080,0 2px 10px #79562612}.grip-label{font-size:23px;text-align:left;line-height:1.15;font-style:italic}
+.veil-stage.is-dragging .veil-grip,.veil-stage.is-revealed .veil-grip{opacity:0;pointer-events:none}
+.veil-controls{width:min(100%,850px);margin:20px auto 0;display:flex;justify-content:space-between;align-items:center;gap:20px}.veil-hint{font:13px/1.6 Arial,sans-serif;color:#826b5c;margin:0}.veil-toggle{background:none;border:0;border-bottom:1px solid #a388745c;color:var(--wine);font:13px/1.6 Arial,sans-serif;padding:6px 0;cursor:pointer;flex-shrink:0}
+@media(max-width:600px){.schedule-section{margin-bottom:65px}.schedule-paper{padding:32px 30px 26px;min-height:645px}.schedule-date{font-size:10px;letter-spacing:1.6px;margin-bottom:32px}.schedule-list li{grid-template-columns:72px 1fr;gap:23px;min-height:119px}.schedule-list time{font-size:31px}.schedule-list h3{font-size:25px}.schedule-list p{font-size:18px}.schedule-list li::before{left:80px;top:11px;width:6px;height:6px}.schedule-list li:not(:last-child)::after{left:83px;top:19px}.schedule-timezone{font-size:11px}.veil-grip{left:5px;top:44%;gap:10px}.grip-ring{width:41px;height:41px}.grip-label{font-size:22px}.veil-controls{flex-direction:column;gap:8px}.veil-hint{text-align:center;font-size:12px}}
 .masthead{position:sticky;top:0;z-index:20;background:#f3eee5eb;backdrop-filter:blur(16px);gap:20px}
 .header-replay{border:1px solid #71223235;background:#fffaf080;border-radius:30px;padding:10px 17px;font:13px/1.4 Arial,sans-serif;color:var(--wine);cursor:pointer;margin-left:auto;white-space:nowrap}
 .header-replay span{font-size:19px;vertical-align:-1px;margin-right:4px}.header-replay:hover{background:#fffaf0;border-color:var(--wine)}

@@ -8,8 +8,9 @@
   <title>Francisco & Katherine · Eine Einladung für dich</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23712232'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Georgia,serif' font-size='24' fill='%23fff4de'%3EFK%3C/text%3E%3C/svg%3E">
   <link rel="preload" href="assets/fk-siegel-bordeaux-v1.png" as="image">
-  <link rel="stylesheet" href="styles.css?v=2">
-  <script src="invitation.js?v=2" defer></script>
+  <link rel="stylesheet" href="styles.css?v=3">
+  <script src="invitation.js?v=3" defer></script>
+  <script type="module" src="veil.js?v=3"></script>
 </head>
 <body>
   <header class="masthead" aria-label="Francisco und Katherine, 9. Januar 2027">
@@ -74,9 +75,34 @@
       <button class="skip-animation" type="button">Ohne Animation öffnen</button>
     </div>
     <button class="replay" type="button" hidden><span aria-hidden="true">↺</span> Briefanimation noch einmal ansehen</button>
-    <a class="details-link" href="#ort" hidden>Entdecke unseren Hochzeitsort <span aria-hidden="true">↓</span></a>
+    <a class="details-link" href="#ablauf" hidden>Entdecke unseren Hochzeitstag <span aria-hidden="true">↓</span></a>
 
     <div class="wedding-details" hidden>
+      <section class="schedule-section" id="ablauf" aria-labelledby="schedule-heading">
+        <div class="section-heading">
+          <p class="eyebrow">9. JANUAR 2027</p>
+          <h2 id="schedule-heading">Unser Tag mit euch.</h2>
+          <p class="section-subtitle">Vom ersten Hallo bis zum letzten Tanz.</p>
+        </div>
+        <div class="veil-stage">
+          <div class="schedule-paper">
+            <p class="schedule-date">SAMSTAG · CASA ANTARES</p>
+            <ol class="schedule-list">
+              <li><time datetime="2027-01-09T16:30:00-05:00">16:30</time><div><h3>Ankommen</h3><p>Wir heißen euch willkommen.</p></div></li>
+              <li><time datetime="2027-01-09T17:00:00-05:00">17:00</time><div><h3>Die Zeremonie</h3><p>Unser Ja zueinander.</p></div></li>
+              <li><time datetime="2027-01-09T19:00:00-05:00">19:00</time><div><h3>Das Abendessen</h3><p>Gemeinsam genießen und anstoßen.</p></div></li>
+              <li><time datetime="2027-01-10T00:30:00-05:00">00:30</time><div><h3>Ende der Feier</h3><p>Zeit, Abschied zu nehmen.</p></div></li>
+            </ol>
+            <p class="schedule-timezone">Alle Uhrzeiten gelten vor Ort in Kolumbien.<br>Die Feier endet in der Nacht zum 10. Januar.</p>
+          </div>
+          <div class="veil-fallback" aria-hidden="true"></div>
+          <canvas class="veil-canvas" aria-hidden="true"></canvas>
+          <button class="veil-grip" type="button" aria-label="Schleier nach rechts ziehen oder mit Enter öffnen" aria-controls="ablauf" aria-expanded="false"><span class="grip-ring" aria-hidden="true">↗</span><span class="grip-label">Ein Moment<br>zum Enthüllen</span></button>
+        </div>
+        <div class="veil-controls"><p class="veil-hint">Den Schleier greifen und nach rechts ziehen.</p><button class="veil-toggle" type="button">Ablauf direkt anzeigen</button></div>
+        <p class="veil-status sr-only" role="status" aria-live="polite"></p>
+      </section>
+
       <section class="venue-section" id="ort" aria-labelledby="venue-heading">
         <div class="section-heading">
           <p class="eyebrow">HIER FEIERN WIR</p>

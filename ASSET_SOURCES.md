@@ -14,4 +14,14 @@ Hochzeitsort, Beschreibung der Umgebung, Temperaturen (ca. 22 °C tagsüber / 12
 
 ## Animation
 
+### Schleier und Tagesablauf
+
+Tagesablauf nach Nutzerangaben: Ankunft 16:30, Zeremonie 17:00, Abendessen 19:00 am 09.01.2027, Ende 00:30 am 10.01.2027. Alle Zeiten sind Ortszeit Kolumbien (UTC−05:00).
+
+Der Schleier wird mit einem WebGL-Stoffnetz gerendert und benötigt kein zusätzliches Bild. Positionsbasierte 3D-Simulation mit festen 1/60-s-Schritten, Längen-, Scher- und Biegeconstraints, Schwerkraft, Dämpfung, einer gerafften oberen Führung und gewichtetem Maus-/Fingergriff. Die geraffte Form wird durch weiche Führungsfedern unterstützt; es handelt sich um eine interaktive Stoffannäherung. Unsichtbare Tabs/Abschnitte pausieren; kleine Bildschirme verwenden ein reduziertes Netz. Tastatur und Direktanzeige ergänzen die Ziehgeste. Ohne WebGL bleibt eine einfache abziehbare Abdeckung erhalten.
+
+Geprüft: wiederholtes Öffnen/Schließen, kurze Ziehbewegung und Rückkehr, ausreichend weites Ziehen, Direktanzeige, Enter-Bedienung, endliche Simulationswerte, Abdeckung bei 320 und 850 Pixeln Breite. Keine externen Laufzeitbibliotheken.
+
+### Briefumschlag
+
 Der Klick auf das Siegel oder „Mit Animation öffnen“ startet ausdrücklich die vollständige Animation. „Ohne Animation öffnen“ zeigt die Einladung direkt. Nach der Öffnung startet „Briefanimation ansehen“ in der oberen Leiste dieselbe Animation erneut; der Knopf bleibt beim Scrollen sichtbar.
