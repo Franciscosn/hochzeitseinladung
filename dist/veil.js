@@ -44,9 +44,9 @@ void main(){
   float hemY=(1.0-fabricUV.y)*size.y;
   float repeatX=mod(fabricUV.x*size.x,36.0)-18.0;
   float scallop=5.0+3.0*cos(repeatX*3.14159/18.0);
-  float seam=1.0-smoothstep(.65,1.6,abs(hemY-scallop-3.0));
-  float arch=1.0-smoothstep(.65,1.7,abs(length(vec2(repeatX,(hemY-17.0)*1.05))-14.0));
-  float seamTop=1.0-smoothstep(.45,1.15,abs(hemY-39.0));
+  float seam=1.0-smoothstep(.45,1.05,abs(hemY-scallop-3.0));
+  float arch=1.0-smoothstep(.45,1.1,abs(length(vec2(repeatX,(hemY-17.0)*1.05))-14.0));
+  float seamTop=1.0-smoothstep(.3,.8,abs(hemY-39.0));
   float stitch=(.65+.35*sin(fabricUV.x*size.x*2.8))*seamTop;
   vec2 pearlPoint=vec2(repeatX,hemY-12.0);
   float pearl=1.0-smoothstep(1.1,2.5,length(pearlPoint));
@@ -55,22 +55,22 @@ void main(){
   // Cool moonlit silver palette so the veil lifts away from the warm page.
   vec3 silver=vec3(.965,.985,1.0);
   vec3 shadow=vec3(.58,.64,.76);
-  vec3 color=mix(shadow,silver,.40+.58*diffuse)+fiber*.03;
+  vec3 color=mix(shadow,silver,.34+.52*diffuse)+fiber*.02;
   // Iridescent sheen: pale opal tint drifting across the highlight.
   vec3 opal=mix(vec3(.82,.90,1.0),vec3(1.0,.94,1.0),.5+.5*sin(n.x*7.0+n.y*5.0+lightTime*.5));
-  color+=opal*sheen*.20+vec3(.90,.95,1.0)*gleam*.22;
+  color+=opal*sheen*.15+vec3(.90,.95,1.0)*gleam*.16;
   // Heavenly light sweep gliding diagonally across the fabric.
   float sweep=pow(.5+.5*sin((fabricUV.x+fabricUV.y*.55)*7.0-lightTime*.65),9.0);
-  color+=vec3(.85,.92,1.0)*sweep*(.10+.14*diffuse);
+  color+=vec3(.85,.92,1.0)*sweep*(.06+.09*diffuse);
   float grazing=1.0-abs(n.z);
   float alpha=min(1.0,.992+grazing*.008+fiber*.008+band*.008);
-  color=mix(color,vec3(.90,.94,1.0),band*.14+embroidery*.48);
-  color+=embroidery*(.12+.12*sheen)+pearl*.18;
+  color=mix(color,vec3(.90,.94,1.0),band*.10+embroidery*.28);
+  color+=embroidery*(.05+.07*sheen)+pearl*.12;
   float beadIndex=floor(fabricUV.x*size.x/36.0);
   float catchLight=pow(max(0.0,sin(lightTime*.85+beadIndex*2.399+n.x*6.0+n.y*4.0)),16.0);
   float star=exp(-abs(pearlPoint.x)*3.5-abs(pearlPoint.y)*.40)
             +exp(-abs(pearlPoint.y)*3.5-abs(pearlPoint.x)*.40);
-  color+=vec3(.95,.98,1.0)*min(1.0,star)*catchLight*.80;
+  color+=vec3(.95,.98,1.0)*min(1.0,star)*catchLight*.55;
   // Scattered glitter: one tiny sequin per cell, twinkling out of phase.
   vec2 cell=floor(fabricUV*size/11.0);
   vec2 inCell=fract(fabricUV*size/11.0)-.5;
@@ -81,7 +81,7 @@ void main(){
                  +exp(-abs(sparkPos.y)*26.0-abs(sparkPos.x)*6.0)
                  +exp(-dot(sparkPos,sparkPos)*130.0)*.8;
   float glitter=min(1.0,sparkStar)*twinkle*step(.35,seed)*(.45+.55*diffuse);
-  color+=vec3(1.0,1.0,1.0)*glitter*.85;
+  color+=vec3(1.0,1.0,1.0)*glitter*.62;
   alpha*=smoothstep(scallop-1.0,scallop,hemY);
   gl_FragColor=vec4(color*alpha,alpha);
 }`;
@@ -163,6 +163,7 @@ function reveal(open,instant=false){
 function localPoint(event){const r=stage.getBoundingClientRect();return{x:event.clientX-r.left,y:event.clientY-r.top};}
 function down(event){
   if(event.button!==0||pointer||target===1)return;
+  if(nudging){nudging=false;target=0;cloth?.setOpening(0);}
   const point=localPoint(event);
   pointer={id:event.pointerId,startX:point.x,startY:point.y,lastX:point.x,lastY:point.y,start:cloth?.opening??0,moved:false};
   event.currentTarget.setPointerCapture(event.pointerId);
@@ -196,7 +197,15 @@ for(const surface of [grip]){
   surface.addEventListener('pointerup',event=>end(event));surface.addEventListener('pointercancel',event=>end(event,true));
   surface.addEventListener('lostpointercapture',event=>{if(pointer)end(event,true);});
 }
-grip.addEventListener('click',()=>{if(ignoreClick){ignoreClick=false;return;}reveal(true);});
+// A plain click no longer opens the veil: it only tugs the hem as a hint that it wants to be pulled up.
+let nudging=false;
+function nudge(){
+  if(nudging||target>0)return;
+  nudging=true;settleFrames=220;
+  target=.13;cloth?.setOpening(target);wake();
+  setTimeout(()=>{if(nudging){target=0;cloth?.setOpening(0);nudging=false;wake();}},280);
+}
+grip.addEventListener('click',()=>{if(ignoreClick){ignoreClick=false;return;}nudge();});
 grip.addEventListener('keydown',event=>{
   if(event.key==='ArrowUp'||event.key==='ArrowDown'){
     event.preventDefault();target=Math.max(0,Math.min(1,target+(event.key==='ArrowUp'?.2:-.2)));cloth?.setOpening(target);settleFrames=120;wake();updateState(target===1);
