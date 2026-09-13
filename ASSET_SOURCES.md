@@ -1,5 +1,9 @@
 # Bild- und Ortsquellen
 
+## Wachssiegel
+
+`dist/assets/kf-wachssiegel-schlicht.png`: ausgewähltes dunkelrotes Wachssiegel mit K links und F rechts, ohne Krone und Pflanzenornamente. Mit Imagegen erstellt und für den Briefumschlag mit echtem Alphakanal freigestellt. Ausgangsentwurf: `assets/siegel/kf-wachssiegel-schlicht-v1.png`; Erzeugungsprompt daneben gespeichert.
+
 ## Casa Antares
 
 - `dist/assets/casa-eingang.avif`: vom Nutzer im Projekt bereitgestellte Datei `Casa_Eingang.avif`, unverändert übernommen.
