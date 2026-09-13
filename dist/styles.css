@@ -159,3 +159,8 @@ body.is-resetting *,body.is-resetting *::before,body.is-resetting *::after{trans
 @media(max-width:370px){.venue-gallery{grid-template-rows:250px 155px}.weather-section{padding:30px 23px}.weather-intro h2{font-size:38px}.temperatures{gap:15px}.temperatures>div+div{padding-left:15px}.temperatures dd{font-size:63px}.temperatures dd span{font-size:23px}.dresscode-notes{padding:26px 22px 30px}.footer{font-size:10px}}
 
 .veil-canvas,.veil-fallback{pointer-events:none}@media(max-width:600px){.location-row{gap:12px}.deko-ringe{width:42px}.deko-taenzer{width:46px}}
+.lang-switch{position:absolute;top:14px;right:18px;z-index:40;display:flex;align-items:center;gap:2px;font:11px/1 Arial,sans-serif;letter-spacing:1.5px;color:#b3a08c}
+.lang-switch a{color:#8c7a6a;text-decoration:none;padding:8px 7px;border-radius:999px;transition:color .3s}
+.lang-switch a:hover{color:var(--wine)}
+.lang-switch a[aria-current="page"]{color:var(--wine);font-weight:700;text-decoration:underline;text-underline-offset:5px;text-decoration-color:#71223266}
+@media(max-width:600px){.lang-switch{top:8px;right:8px}}

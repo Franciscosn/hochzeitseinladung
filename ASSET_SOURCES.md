@@ -19,7 +19,7 @@
 
 ## Geschenke
 
-Text nach Nutzerangaben: Anwesenheit als Geschenk; bitte nichts, das nicht in einen Geldbeutel passt.
+Text nach Nutzerangaben: Anwesenheit als Geschenk; bitte nichts, das nicht in einen kleinen Umschlag passt.
 
 ## Zusage
 

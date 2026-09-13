@@ -12,6 +12,7 @@ const footer=document.querySelector('.footer');
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 let cloth,gl,program,buffers,raf=0,last=0,accumulator=0,visible=false,settleFrames=0;
 let target=0,pointer=null,ignoreClick=false,width=0,height=0;
+const T=window.I18N||{};
 
 const vertexSource=`
 precision mediump float;
@@ -150,13 +151,13 @@ function updateState(open){
   stage.classList.toggle('is-revealed',open);
   grip.setAttribute('aria-expanded',String(open));
   grip.tabIndex=open?-1:0;
-  toggle.textContent=open?'Schleier wieder senken':'Ablauf direkt anzeigen';
-  hint.textContent=open?'Wir freuen uns auf jeden dieser Momente mit euch.':'Den Saum unten greifen und nach oben heben.';
+  toggle.textContent=open?(T.veilLower||'Schleier wieder senken'):(T.veilShow||'Ablauf direkt anzeigen');
+  hint.textContent=open?(T.veilHintOpen||'Wir freuen uns auf jeden dieser Momente mit euch.'):(T.veilHintClosed||'Den Saum unten greifen und nach oben heben.');
 }
 function reveal(open,instant=false){
   target=open?1:0;cloth?.setOpening(target);settleFrames=180;updateState(open);
   if(instant&&cloth){cloth.snapOpening(target);draw();}
-  announcement.textContent=open?'Der Tagesablauf ist aufgedeckt.':'Der Schleier ist wieder geschlossen.';
+  announcement.textContent=open?(T.veilRevealed||'Der Tagesablauf ist aufgedeckt.'):(T.veilClosed||'Der Schleier ist wieder geschlossen.');
   wake();
 }
 function localPoint(event){const r=stage.getBoundingClientRect();return{x:event.clientX-r.left,y:event.clientY-r.top};}
