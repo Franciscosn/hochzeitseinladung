@@ -1,4 +1,4 @@
-import {VeilCloth} from './cloth-physics.mjs?v=3';
+import {VeilCloth} from './cloth-physics.mjs?v=4';
 
 const stage=document.querySelector('.veil-stage');
 const canvas=stage.querySelector('canvas');
@@ -104,8 +104,8 @@ function updateState(open){
   stage.classList.toggle('is-revealed',open);
   grip.setAttribute('aria-expanded',String(open));
   grip.tabIndex=open?-1:0;
-  toggle.textContent=open?'Schleier wieder schließen':'Ablauf direkt anzeigen';
-  hint.textContent=open?'Wir freuen uns auf jeden dieser Momente mit euch.':'Den Schleier greifen und nach rechts ziehen.';
+  toggle.textContent=open?'Schleier wieder senken':'Ablauf direkt anzeigen';
+  hint.textContent=open?'Wir freuen uns auf jeden dieser Momente mit euch.':'Den Saum unten greifen und nach oben heben.';
 }
 function reveal(open,instant=false){
   target=open?1:0;cloth?.setOpening(target);settleFrames=180;updateState(open);
@@ -124,13 +124,13 @@ function down(event){
 function move(event){
   if(!pointer||event.pointerId!==pointer.id)return;
   const point=localPoint(event),dx=point.x-pointer.startX,dy=point.y-pointer.startY;
-  if(!pointer.moved&&Math.abs(dx)<7)return;
-  if(!pointer.moved&&Math.abs(dy)>Math.abs(dx)*1.4){end(event,true);return;}
+  if(!pointer.moved&&Math.abs(dy)<7)return;
+  if(!pointer.moved&&Math.abs(dx)>Math.abs(dy)*1.4){end(event,true);return;}
   pointer.moved=true;stage.classList.add('is-dragging');
-  target=Math.max(0,Math.min(1,pointer.start+dx/(width*.74)));
+  target=Math.max(0,Math.min(1,pointer.start-dy/(height*.74)));
   cloth?.setOpening(target);cloth?.moveGrab(Math.min(width+30,Math.max(-30,point.x)),Math.min(height+30,Math.max(-30,point.y)));
   pointer.lastX=point.x;pointer.lastY=point.y;
-  if(!gl)stage.querySelector('.veil-fallback').style.transform=`scaleX(${1-target*.94})`;
+  if(!gl)stage.querySelector('.veil-fallback').style.transform=`scaleY(${1-target})`;
   wake();
 }
 function end(event,cancelled=false){
@@ -144,15 +144,15 @@ function end(event,cancelled=false){
   if(moved){stage.querySelector('.veil-fallback').style.transform='';reveal(!cancelled&&target>.30);}
   else{settleFrames=120;wake();}
 }
-for(const surface of [canvas,grip]){
+for(const surface of [grip]){
   surface.addEventListener('pointerdown',down);surface.addEventListener('pointermove',move);
   surface.addEventListener('pointerup',event=>end(event));surface.addEventListener('pointercancel',event=>end(event,true));
   surface.addEventListener('lostpointercapture',event=>{if(pointer)end(event,true);});
 }
 grip.addEventListener('click',()=>{if(ignoreClick){ignoreClick=false;return;}reveal(true);});
 grip.addEventListener('keydown',event=>{
-  if(event.key==='ArrowRight'||event.key==='ArrowLeft'){
-    event.preventDefault();target=Math.max(0,Math.min(1,target+(event.key==='ArrowRight'?.2:-.2)));cloth?.setOpening(target);settleFrames=120;wake();if(target===1)updateState(true);
+  if(event.key==='ArrowUp'||event.key==='ArrowDown'){
+    event.preventDefault();target=Math.max(0,Math.min(1,target+(event.key==='ArrowUp'?.2:-.2)));cloth?.setOpening(target);settleFrames=120;wake();if(target===1)updateState(true);
   }
 });
 toggle.addEventListener('click',()=>reveal(target<.5,true));

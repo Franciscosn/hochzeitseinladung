@@ -46,9 +46,10 @@ export class VeilCloth {
     this.setOpening(value); this.opening=this.target; this.speed=0;this.grab=null;
     for(let i=0;i<this.count;i++){
       const u=this.uv[i*2],v=this.uv[i*2+1],j=i*3;
-      this.position[j]=this.opening*this.width*.935+u*(this.width*(1-this.opening*.94)+22)-11;
-      this.position[j+1]=v*(this.height+20)-8;
-      this.position[j+2]=Math.cos(u*Math.PI*12+v*.5)*(8+this.opening*36)*(.8+v*.2);
+      const angle=this.opening*Math.PI;
+      this.position[j]=u*(this.width+22)-11;
+      this.position[j+1]=v*(this.height+20)*Math.cos(angle)-8;
+      this.position[j+2]=v*(this.height+20)*Math.sin(angle)+Math.cos(u*Math.PI*12+v*.5)*8;
     }
     this.previous.set(this.position);
     for(let i=0;i<12;i++)this.step(false);
@@ -76,9 +77,9 @@ export class VeilCloth {
   pinRail() {
     for (let x = 0; x <= this.columns; x++) {
       const i = x * 3, u = x / this.columns;
-      this.position[i] = this.opening * this.width * .935 + u * (this.width * (1 - this.opening * .94) + 22) - 11;
+      this.position[i] = u * (this.width + 22) - 11;
       this.position[i+1] = -8;
-      this.position[i+2] = Math.cos(u * Math.PI * 12) * (8 + this.opening * 30);
+      this.position[i+2] = Math.cos(u * Math.PI * 12) * 8;
     }
   }
 
@@ -89,12 +90,15 @@ export class VeilCloth {
     this.opening = Math.max(0, Math.min(1, this.opening + this.speed));
     for (let i = this.columns + 1; i < this.count; i++) {
       const j = i*3, u = this.uv[i*2], v = this.uv[i*2+1];
-      const gatherX = this.opening*this.width*.935 + u*(this.width*(1-this.opening*.94)+22)-11;
-      const foldZ = Math.cos(u*Math.PI*12 + v*.5) * (8+this.opening*36) * (.8+v*.2);
+      // Lift the free lower hem forward and over the fixed upper edge.
+      const angle=this.opening*Math.PI;
+      const restX=u*(this.width+22)-11;
+      const liftY=v*(this.height+20)*Math.cos(angle)-8;
+      const foldZ=v*(this.height+20)*Math.sin(angle)+Math.cos(u*Math.PI*12+v*.5)*8;
       const air = breeze ? Math.sin(this.time*1.3+v*4+u*5)*13*v : 0;
-      const fx = (gatherX-p[j])*24;
-      const fy = 330 + (v*(this.height+20)-8-p[j+1])*2;
-      const fz = (foldZ-p[j+2])*15 + air;
+      const fx = (restX-p[j])*24;
+      const fy = 330 + (liftY-p[j+1])*(2+this.opening*34);
+      const fz = (foldZ-p[j+2])*28 + air;
       const forces = [fx,fy,fz];
       for (let k=0;k<3;k++) {
         const current = p[j+k];
