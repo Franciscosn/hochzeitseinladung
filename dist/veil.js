@@ -24,7 +24,7 @@ void main(){
 const fragmentSource=`
 precision mediump float;
 varying vec2 fabricUV; varying vec3 clothNormal; varying float depth;
-uniform vec2 size;
+uniform vec2 size; uniform float lightTime;
 void main(){
   vec3 n=normalize(clothNormal);
   float diffuse=abs(dot(n,normalize(vec3(-.55,-.35,.85))));
@@ -34,13 +34,31 @@ void main(){
   float weft=pow(.5+.5*sin(threads.y*6.28318),7.0);
   float fiber=(warp+weft)*.5;
   float edge=1.0-smoothstep(.0,.009,min(min(fabricUV.x,1.0-fabricUV.x),1.0-fabricUV.y));
-  float hem=.5+.5*sin(fabricUV.y*290.0);
+  // Embroidery lives in fabric coordinates, so stitches and pearls follow every fold.
+  float hemY=(1.0-fabricUV.y)*size.y;
+  float repeatX=mod(fabricUV.x*size.x,36.0)-18.0;
+  float scallop=5.0+3.0*cos(repeatX*3.14159/18.0);
+  float seam=1.0-smoothstep(.65,1.6,abs(hemY-scallop-3.0));
+  float arch=1.0-smoothstep(.65,1.7,abs(length(vec2(repeatX,(hemY-17.0)*1.05))-14.0));
+  float seamTop=1.0-smoothstep(.45,1.15,abs(hemY-39.0));
+  float stitch=(.65+.35*sin(fabricUV.x*size.x*2.8))*seamTop;
+  vec2 pearlPoint=vec2(repeatX,hemY-12.0);
+  float pearl=1.0-smoothstep(1.1,2.5,length(pearlPoint));
+  float embroidery=max(max(seam,arch*.85),stitch*.8);
+  float band=1.0-smoothstep(38.0,45.0,hemY);
   vec3 ivory=vec3(.995,.975,.93);
   vec3 shadow=vec3(.68,.62,.53);
   vec3 color=mix(shadow,ivory,.42+.56*diffuse)+sheen*.10+fiber*.025;
   float grazing=1.0-abs(n.z);
-  float alpha=min(.98,.85+grazing*.10+fiber*.035+edge*.04);
-  color=mix(color,vec3(.89,.84,.73),edge*.17*hem);
+  float alpha=min(1.0,.992+grazing*.008+fiber*.008+band*.008);
+  color=mix(color,vec3(.93,.88,.76),band*.12+embroidery*.48);
+  color+=embroidery*(.10+.10*sheen)+pearl*.15;
+  float beadIndex=floor(fabricUV.x*size.x/36.0);
+  float catchLight=pow(max(0.0,sin(lightTime*.85+beadIndex*2.399+n.x*6.0+n.y*4.0)),16.0);
+  float star=exp(-abs(pearlPoint.x)*3.5-abs(pearlPoint.y)*.40)
+            +exp(-abs(pearlPoint.y)*3.5-abs(pearlPoint.x)*.40);
+  color+=vec3(1.0,.92,.72)*min(1.0,star)*catchLight*.65;
+  alpha*=smoothstep(scallop-1.0,scallop,hemY);
   gl_FragColor=vec4(color*alpha,alpha);
 }`;
 
@@ -85,6 +103,7 @@ function resize(){
 }
 function draw(){
   if(!gl||!cloth)return;
+  gl.uniform1f(gl.getUniformLocation(program,'lightTime'),reducedMotion.matches?0:performance.now()/1000%120);
   gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
   gl.bindBuffer(gl.ARRAY_BUFFER,buffers.position);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(cloth.position),gl.DYNAMIC_DRAW);
   gl.bindBuffer(gl.ARRAY_BUFFER,buffers.normal);gl.bufferData(gl.ARRAY_BUFFER,cloth.normals,gl.DYNAMIC_DRAW);
