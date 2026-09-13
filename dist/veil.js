@@ -25,10 +25,12 @@ const fragmentSource=`
 precision mediump float;
 varying vec2 fabricUV; varying vec3 clothNormal; varying float depth;
 uniform vec2 size; uniform float lightTime;
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
 void main(){
   vec3 n=normalize(clothNormal);
   float diffuse=abs(dot(n,normalize(vec3(-.55,-.35,.85))));
   float sheen=pow(abs(dot(n,normalize(vec3(.25,-.45,1.0)))),14.0);
+  float gleam=pow(abs(dot(n,normalize(vec3(-.35,.30,1.0)))),34.0);
   vec2 threads=fabricUV*size/2.2;
   float warp=pow(.5+.5*sin(threads.x*6.28318),7.0);
   float weft=pow(.5+.5*sin(threads.y*6.28318),7.0);
@@ -46,18 +48,36 @@ void main(){
   float pearl=1.0-smoothstep(1.1,2.5,length(pearlPoint));
   float embroidery=max(max(seam,arch*.85),stitch*.8);
   float band=1.0-smoothstep(38.0,45.0,hemY);
-  vec3 ivory=vec3(.995,.975,.93);
-  vec3 shadow=vec3(.68,.62,.53);
-  vec3 color=mix(shadow,ivory,.42+.56*diffuse)+sheen*.10+fiber*.025;
+  // Cool moonlit silver palette so the veil lifts away from the warm page.
+  vec3 silver=vec3(.965,.985,1.0);
+  vec3 shadow=vec3(.58,.64,.76);
+  vec3 color=mix(shadow,silver,.40+.58*diffuse)+fiber*.03;
+  // Iridescent sheen: pale opal tint drifting across the highlight.
+  vec3 opal=mix(vec3(.82,.90,1.0),vec3(1.0,.94,1.0),.5+.5*sin(n.x*7.0+n.y*5.0+lightTime*.5));
+  color+=opal*sheen*.20+vec3(.90,.95,1.0)*gleam*.22;
+  // Heavenly light sweep gliding diagonally across the fabric.
+  float sweep=pow(.5+.5*sin((fabricUV.x+fabricUV.y*.55)*7.0-lightTime*.65),9.0);
+  color+=vec3(.85,.92,1.0)*sweep*(.10+.14*diffuse);
   float grazing=1.0-abs(n.z);
   float alpha=min(1.0,.992+grazing*.008+fiber*.008+band*.008);
-  color=mix(color,vec3(.93,.88,.76),band*.12+embroidery*.48);
-  color+=embroidery*(.10+.10*sheen)+pearl*.15;
+  color=mix(color,vec3(.90,.94,1.0),band*.14+embroidery*.48);
+  color+=embroidery*(.12+.12*sheen)+pearl*.18;
   float beadIndex=floor(fabricUV.x*size.x/36.0);
   float catchLight=pow(max(0.0,sin(lightTime*.85+beadIndex*2.399+n.x*6.0+n.y*4.0)),16.0);
   float star=exp(-abs(pearlPoint.x)*3.5-abs(pearlPoint.y)*.40)
             +exp(-abs(pearlPoint.y)*3.5-abs(pearlPoint.x)*.40);
-  color+=vec3(1.0,.92,.72)*min(1.0,star)*catchLight*.65;
+  color+=vec3(.95,.98,1.0)*min(1.0,star)*catchLight*.80;
+  // Scattered glitter: one tiny sequin per cell, twinkling out of phase.
+  vec2 cell=floor(fabricUV*size/11.0);
+  vec2 inCell=fract(fabricUV*size/11.0)-.5;
+  float seed=hash(cell);
+  vec2 sparkPos=inCell-(vec2(hash(cell+7.31),hash(cell+3.17))-.5)*.62;
+  float twinkle=pow(max(0.0,sin(lightTime*(1.2+seed*1.8)+seed*44.0+n.x*5.0+n.y*4.0)),18.0);
+  float sparkStar=exp(-abs(sparkPos.x)*26.0-abs(sparkPos.y)*6.0)
+                 +exp(-abs(sparkPos.y)*26.0-abs(sparkPos.x)*6.0)
+                 +exp(-dot(sparkPos,sparkPos)*130.0)*.8;
+  float glitter=min(1.0,sparkStar)*twinkle*step(.35,seed)*(.45+.55*diffuse);
+  color+=vec3(1.0,1.0,1.0)*glitter*.85;
   alpha*=smoothstep(scallop-1.0,scallop,hemY);
   gl_FragColor=vec4(color*alpha,alpha);
 }`;

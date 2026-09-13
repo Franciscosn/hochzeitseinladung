@@ -8,9 +8,18 @@
 - Die Pergola zeigt eine frühere Feier, keine Zusage zur Dekoration der Hochzeit von Francisco und Katherine. In der Bildunterschrift als Impression gekennzeichnet.
 - Adresse und Karteneinbettung am 13.09.2026 über den vom Nutzer genannten Link https://share.google/9lVp0teyH2hZcPGr6 in Google Maps bestätigt: Casa Antares, Km 3 vía el Infiernito, Villa de Leyva, Boyacá, Kolumbien. Google-Maps-Koordinaten: 5.6456278, -73.5542638.
 
-## Text
+## Dresscode
 
-Hochzeitsort, Beschreibung der Umgebung, Temperaturen (ca. 22 °C tagsüber / 12 °C nachts) und Heizpilze nach Nutzerangaben. Die Temperaturangaben sind als ungefähre Orientierung formuliert, nicht als Wettervorhersage.
+- `dist/assets/dresscode.webp`: vom Nutzer bereitgestellte Collage `dresscode.png` (Entwurf v5), fürs Web als WebP übernommen.
+- Text nach Nutzerangaben: elegant, schön gekleidet aber entspannt; Feier teils auf Rasen, keine feinen Absätze; Weiß, Champagner und Beige der Braut vorbehalten, lange Kleider.
+
+## Geschenke
+
+Text nach Nutzerangaben: Anwesenheit als Geschenk; bitte nichts, das nicht in einen Geldbeutel passt.
+
+## Zusage
+
+Zusage und Absage öffnen wie auf crelur.com eine Mail an `boda@crelur.com`. Die vorausgefüllte Zusage-Mail fragt nach Name, Ernährungsbesonderheiten und sonstigem. Die Mail ist eine Option; Gäste können sich auch direkt im Chat melden.
 
 ## Animation
 
